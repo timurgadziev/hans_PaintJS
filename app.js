@@ -17,11 +17,7 @@ let mode = document.getElementById("jsMode");
 let save = document.getElementById("jsSave");
 let clear = document.getElementById("jsClear");
 
-let posObj = {
-    xPos:0,
-    yPos:0,
-    color:"white"
-};
+
 let posList = [];
 
 let painting = false;
@@ -36,8 +32,11 @@ function onMouseMove(event){
          ctx.moveTo(x, y);
     }
     else{
-        posObj.xPos = x;
-        posObj.yPos = y;
+        const posObj = {
+            xPos:x,
+            yPos:y,
+            color:"white"
+        };
         posList.push(posObj);
         //console.log(posList);
 
@@ -74,7 +73,9 @@ function handleCanvasClick(){
     if(filling){
         ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
         //ctx.beginPath();
-        for(i=0; i<posList.length; i++){
+        ctx.beginPath();
+        ctx.moveTo(posList[0].xPos, posList[0].yPos);
+        for(i=1; i<posList.length; i++){
             console.log(posList[i].color, posList[i].xPos, posList[i].yPos);
             ctx.strokeStyle = posList[i].color;
             ctx.lineTo(posList[i].xPos, posList[i].yPos);
